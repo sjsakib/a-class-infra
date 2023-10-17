@@ -11,19 +11,18 @@ async function main() {
   console.log('Connected to Redis');
 
   http
-    .createServer(async (_req, res) => {
+    .createServer(async (req, res) => {
       res.writeHead(200, { 'Content-Type': 'text/plain' });
 
       const count = await redisClient.incr(COUNTER_KEY);
 
       console.log(`Count: ${count}`);
 
-      throw new Error('Something went wrong');
-
+      res.end(`Hello World! I have been seen ${count} times.\n`);
     })
     .listen(PORT);
 
-    console.log(`Listening on port: ${PORT}`);
+  console.log(`Listening on port: ${PORT}`);
 }
 
 main().catch(err => {
